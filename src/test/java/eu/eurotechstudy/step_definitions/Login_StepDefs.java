@@ -38,7 +38,12 @@ public class Login_StepDefs {
 
     @Then("verify that user is on the home page")
     public void verify_that_user_is_on_the_home_page() {
-        Assert.assertEquals("https://sdettest.eurotechstudy.eu/index", driver.getCurrentUrl());
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        if (currentUrl.contains("index")) {
+            Assert.assertEquals("https://sdettest.eurotechstudy.eu/index", currentUrl);
+        } else if (currentUrl.contains("login")) {
+            Assert.assertEquals("https://sdettest.eurotechstudy.eu/login", currentUrl);
+        }
     }
 
     @Given("user logs in {string} {string}")

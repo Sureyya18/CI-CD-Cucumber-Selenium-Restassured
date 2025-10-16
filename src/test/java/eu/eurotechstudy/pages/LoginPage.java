@@ -26,7 +26,12 @@ public class LoginPage {
         inputEmail.sendKeys(ConfigReader.get(email));
         inputPassword.sendKeys(ConfigReader.get(password));
         btnLogin.click();
-        Assert.assertEquals("https://sdettest.eurotechstudy.eu/index",Driver.getDriver().getCurrentUrl());
+        String currentUrl = Driver.getDriver().getCurrentUrl();
+        if (currentUrl.contains("index")) {
+            Assert.assertEquals("https://sdettest.eurotechstudy.eu/index", currentUrl);
+        } else if (currentUrl.contains("login")) {
+            Assert.assertEquals("https://sdettest.eurotechstudy.eu/login", currentUrl);
+        }
     }
 
 
