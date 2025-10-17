@@ -62,18 +62,22 @@ public class Login_StepDefs {
     @Then("verify that {string} {string} is same in UI and API")
     public void verify_that_is_same_in_ui_and_api(String email,String token) {
 
-        String uiEmail = dashboardPage.email.getText();
-        RestAssured.given().accept(ContentType.JSON);
+       String uiEmail = dashboardPage.email.getText();
+        String userToken = ConfigReader.get(token);
         Response response = RestAssured.given().accept(ContentType.JSON)
-                .when().header("token", token)
+                .when().header("token", userToken)
                 .get("https://sdettest.eurotechstudy.eu/sw/api/v1/user/me");
 
         String apiEmail = response.path("[0].email");
 
         BrowserUtils.waitFor(2);
 
-        Assert.assertEquals(uiEmail,email);
-        Assert.assertEquals(apiEmail,email);
+        String expectedEmail = ConfigReader.get(email);
+
+
+
+        Assert.assertEquals(uiEmail,expectedEmail);
+        Assert.assertEquals(apiEmail,expectedEmail);
     }
 
 }
