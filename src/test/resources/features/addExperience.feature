@@ -3,7 +3,7 @@ Feature: Add new experience
   Background:
     Given user logs in "testerEmail" "testerPass"
     When user clicks on the "Vadim" menu and "My Profile" sub-menu
-  @wip
+
     Scenario: add new experience
       When user clicks on the "Add Experience" section
       And user enters "Job Title *" "SDET" in Add Experience

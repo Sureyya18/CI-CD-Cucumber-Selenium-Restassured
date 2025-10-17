@@ -55,4 +55,9 @@ public class Login_StepDefs {
 //        Assert.assertEquals("https://sdettest.eurotechstudy.eu/index",driver.getCurrentUrl());
         loginPage.login(email, pwd);
     }
+    @Then("verify that {string} {string} is same in UI and API")
+    public void verify_that_is_same_in_ui_and_api(String email,String token) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 }

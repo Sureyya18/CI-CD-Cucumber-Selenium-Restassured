@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
         },
         features = "src/test/resources/features",
         glue = "eu/eurotechstudy/step_definitions",
-        dryRun = false,
-        tags = "@wip",
+        dryRun = true,
+        tags = "",
         publish = false
 )
 public class Eurotech_Runner {

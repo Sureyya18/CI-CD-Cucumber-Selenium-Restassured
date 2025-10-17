@@ -1,3 +1,4 @@
+@smoke
 Feature: Login Page Functionality
 
   Background:
@@ -8,9 +9,11 @@ Feature: Login Page Functionality
       And user enters "teacherPass" password
       And user clicks on the login button
       Then verify that user is on the home page
+      And verify that "teacherEmail" "teacherToken" is same in UI and API
 
   Scenario: login as a dev
     When user enters "devEmail" email
     And user enters "devPass" password
     And user clicks on the login button
     Then verify that user is on the home page
+    And verify that "devEmail" "devToken" is same in UI and API
