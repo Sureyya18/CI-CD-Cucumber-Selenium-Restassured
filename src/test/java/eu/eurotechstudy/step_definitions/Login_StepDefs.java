@@ -1,5 +1,6 @@
 package eu.eurotechstudy.step_definitions;
 
+import eu.eurotechstudy.pages.DashboardPage;
 import eu.eurotechstudy.pages.LoginPage;
 import eu.eurotechstudy.utils.BrowserUtils;
 import eu.eurotechstudy.utils.ConfigReader;
@@ -7,6 +8,9 @@ import eu.eurotechstudy.utils.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
@@ -14,7 +18,7 @@ public class Login_StepDefs {
 
     WebDriver driver = Driver.getDriver();
     LoginPage loginPage = new LoginPage();
-
+    DashboardPage dashboardPage = new DashboardPage();
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
         driver.get(ConfigReader.get("url"));
@@ -57,7 +61,19 @@ public class Login_StepDefs {
     }
     @Then("verify that {string} {string} is same in UI and API")
     public void verify_that_is_same_in_ui_and_api(String email,String token) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        String uiEmail = dashboardPage.email.getText();
+        RestAssured.given().accept(ContentType.JSON);
+        Response response = RestAssured.given().accept(ContentType.JSON)
+                .when().header("token", token)
+                .get("https://sdettest.eurotechstudy.eu/sw/api/v1/user/me");
+
+        String apiEmail = response.path("[0].email");
+
+        BrowserUtils.waitFor(2);
+
+        Assert.assertEquals(uiEmail,email);
+        Assert.assertEquals(apiEmail,email);
     }
+
 }
